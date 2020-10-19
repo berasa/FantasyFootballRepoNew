@@ -1,11 +1,12 @@
+
 <?php
-// Start the session
 session_start();
 ?>
 
+
 <!DOCTYPE html>
 <html>
-<title>Home Work 1</title>
+<title>Fantasy Football Game</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -22,19 +23,34 @@ h1 {letter-spacing: 6px}
   <h1 class="w3-xlarge">Fantasy Football Project</h1>
   <h1>Cloud Computing Course</h1>
   
+ 
     <div class="w3-bar w3-border">
       <a href='\main.php' target='_self' class="w3-bar-item w3-button">Home</a>
-      <a href='\login.html' target='_self' class="w3-bar-item w3-button w3-light-grey">Login</a>
-      <a href='\registration.html' target='_self' class="w3-bar-item w3-button">Register</a>
-    </div>
+      <a href='\FormTeam.php' target='_self' class="w3-bar-item w3-button">Add Team</a>
+      <a href='\Statistics.php' target='_self' class="w3-bar-item w3-button">Players Statistics(RB)</a>
+      <a href='\Statistics2.php' target='_self' class="w3-bar-item w3-button">Players Statistics(QB)</a>
+      <a href='\Statistics3.php' target='_self' class="w3-bar-item w3-button">Players Statistics(TE)</a>
+      <a href='\Statistics4.php' target='_self' class="w3-bar-item w3-button">Players Statistics(WR)</a>
+      <a href='\TeamRank.php' target='_self' class="w3-bar-item w3-button">Team Scores</a>
+      <a href='\MyTeam.php' target='_self' class="w3-bar-item w3-button">MyTeam</a>
+
+
+  
+  </div>
+<br>
+<?php
+echo "<span style=\"color:Blue;text-align:center;\">Hello ";
+echo"</span>";
+?>
+
 </header>
 
 <body>
 
 <?php
 try {
-$connect = new PDO("sqlsrv:server = tcp:ahmaddbserver.database.windows.net,1433; Database = CCours", "Ahmad", "Ayham123456789");
-    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$connect = new PDO("sqlsrv:server = tcp:falcondbserver.database.windows.net,1433; Database = CCourse", "ahmad", "Ayham123456789");
+                     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 }
 catch (PDOException $e) {
@@ -59,9 +75,8 @@ if (!$return_user) {
 
     if ($return_user->fetchColumn() > 0) {
 foreach ($connect->query($sel) as $namerow ){
-        echo "<p> Hello ".$namerow[ "first_name" ]." ".$namerow[ "last_name" ]." </p> Your Email= ".$namerow[ "email" ]."</p>";
-       $_SESSION["User_ID"] = $namerow[ "id" ];
-       $_SESSION["User_Name"] = $namerow[ "username" ];
+        $_SESSION["User_ID"]=$namerow[ "id" ];
+        $_SESSION["User_name"]=$namerow[ "username" ];
 
             }
 
@@ -80,7 +95,7 @@ foreach ($connect->query($sel) as $namerow ){
 <!-- Footer -->
 <footer class="w3-container w3-padding-64 w3-light-grey w3-center w3-large"> 
 
-  <p>Powered by Group2</a></p>
+  <p>Powered by Ahmad Alhasanat</a></p>
 </footer>
 
 </body>

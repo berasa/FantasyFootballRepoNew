@@ -10,7 +10,7 @@ $link_to_form = "/FormTeam.php";
 
 <!DOCTYPE html>
 <html>
-<title>Home Work 1</title>
+<title>Fantasy Football Game</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -23,21 +23,17 @@ h1 {letter-spacing: 6px}
 </style>
 <body>
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-content" style="max-width:1500px">
 
 <!-- Header -->
 <header class="w3-panel w3-center w3-opacity" style="padding:128px 16px">
   <h1 class="w3-xlarge">Fantasy Football Project</h1>
   <h1>Cloud Computing Course</h1>
   
-  <div class="w3-padding-32">
-    <div class="w3-bar w3-border">
+  <div class="w3-bar w3-border">
       <a href='<?php echo $link_to_Home; ?>' target='_self' class="w3-bar-item w3-button">Home</a>
       <a href='<?php echo $link_to_Login; ?>'  class="w3-bar-item w3-button w3-light-grey">Login</a>
       <a href='<?php echo $link_to_Register; ?>' target='_self' class="w3-bar-item w3-button">Register</a>
-      <a href='<?php echo $link_to_form; ?>' target='_self' class="w3-bar-item w3-button">Form Team</a>
-    </div>
+
   </div>
 </header>
 

@@ -12,13 +12,41 @@ session_start();
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
+body,h1 {font-family: "Raleway", Arial, sans-serif}
+h1 {letter-spacing: 6px}
+.w3-row-padding img {margin-bottom: 12px}
+</style>
+
+<!-- Header -->
+<header class="w3-panel w3-center w3-opacity" style="padding:128px 16px">
+  <h1 class="w3-xlarge">Fantasy Football Project</h1>
+  <h1>Cloud Computing Course</h1>
+  
+    <div class="w3-bar w3-border">
+      <a href='\main.php' target='_self' class="w3-bar-item w3-button">Home</a>
+      <a href='\FormTeam.php' target='_self' class="w3-bar-item w3-button">Add Team</a>
+      <a href='\Statistics.php' target='_self' class="w3-bar-item w3-button">Players Statistics(RB)</a>
+      <a href='\Statistics2.php' target='_self' class="w3-bar-item w3-button">Players Statistics(QB)</a>
+      <a href='\Statistics3.php' target='_self' class="w3-bar-item w3-button">Players Statistics(TE)</a>
+      <a href='\Statistics4.php' target='_self' class="w3-bar-item w3-button">Players Statistics(WR)</a>
+      <a href='\TeamRank.php' target='_self' class="w3-bar-item w3-button">Team Scores</a>
+      <a href='\MyTeam.php' target='_self' class="w3-bar-item w3-button">MyTeam</a>
+    </div>
+<br>
+<?php
+
+echo "<span style=\"color:Blue;text-align:center;\">Hello: ";
+echo $_SESSION["User_name"];
+echo"</span>";
+?>
+
+<style>
 table {
   border-spacing: 10;
   width: 50%;
   border: 1px solid #ddd;
   margin-left: auto;
   margin-right: auto;
-
 
 }
 
@@ -48,10 +76,6 @@ tr:nth-child(even) {
 
 }
 
-
-body,h1 {font-family: "Raleway", Arial, sans-serif}
-h1 {letter-spacing: 6px}
-.w3-row-padding img {margin-bottom: 12px}
 </style>
 
 <script>
@@ -110,6 +134,29 @@ function sortTable(n) {
   }
 }
 
+function sortTable2(n) {
+  var table, rows, switching1, i, x, y, shouldSwitch1;
+  table = document.getElementById("myTable2");
+  switching1 = true;
+  while (switching1) {
+    switching1 = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch1 = false;
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];														 
+      if (Number(x.innerHTML) > Number(y.innerHTML)) {										   
+        shouldSwitch1 = true;
+        break;		 
+      }
+    }
+    if (shouldSwitch1) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching1 = true;
+    }
+  }
+}
+
 function myFunction() {
   // Declare variables
   var input, filter, table, tr, td, i, txtValue;
@@ -131,33 +178,10 @@ function myFunction() {
     }
   }
 }
+</script>
 
 </script>
 
-<!-- Header -->
-<header class="w3-panel w3-center w3-opacity" style="padding:128px 16px">
-  <h1 class="w3-xlarge">Fantasy Football Project</h1>
-  <h1>Cloud Computing Course</h1>
-  
-    <div class="w3-bar w3-border">
-      <a href='\main.php' target='_self' class="w3-bar-item w3-button">Home</a>
-
-      <a href='\FormTeam.php' target='_self' class="w3-bar-item w3-button">Add Team</a>
-      <a href='\Statistics.php' target='_self' class="w3-bar-item w3-button">Players Statistics(RB)</a>
-      <a href='\Statistics2.php' target='_self' class="w3-bar-item w3-button">Players Statistics(QB)</a>
-      <a href='\Statistics3.php' target='_self' class="w3-bar-item w3-button">Players Statistics(TE)</a>
-      <a href='\Statistics4.php' target='_self' class="w3-bar-item w3-button">Players Statistics(WR)</a>
-      <a href='\TeamRank.php' target='_self' class="w3-bar-item w3-button">Team Scores</a>
-      <a href='\MyTeam.php' target='_self' class="w3-bar-item w3-button">MyTeam</a>
-   </div>
-<br>
-<?php
-
-echo "<span style=\"color:Blue;text-align:center;\">Hello: ";
-echo $_SESSION["User_name"];
-echo"</span>";
-;
-?>
 
 </header>
 
@@ -176,7 +200,7 @@ catch (PDOException $e) {
 
 
 
-$sel = "SELECT * FROM player_details";
+$sel = "SELECT * FROM player_details WHERE FantPosition='RB'";
 
 $return_user=$connect->query($sel);
  
@@ -186,17 +210,18 @@ if (!$return_user) {
 
     if ($return_user->fetchColumn() > 0) {
 echo "<html><body>";
-echo " <form action='AddTeam.php' method='POST'> ";
+echo " <form action='' method='POST'> ";
 echo "<input type=\"text\" id=\"myInput\" onkeyup=\"myFunction()\" placeholder=\"Search for Player Name..\">";
-echo "<table id=\"myTable2\"><tr><th></th><th onclick=\"sortTable(0)\">Player Name</th><th>Team</th> <th>Position</th></tr>";
-
+echo "<table id=\"myTable2\"><tr><th onclick=\"sortTable2(0)\">Rank</th><th onclick=\"sortTable(1)\">Player Name</th><th onclick=\"sortTable(2)\">Team</th> <th>Position</th><th onclick=\"sortTable2(4)\">Rushing Yds</th><th onclick=\"sortTable2(5)\">Rushing TD</th></tr>";
 foreach ($connect->query($sel) as $namerow ){
      echo "<tr>";
-       echo "<td> <input type='checkbox' name='Players[]' value='".$namerow[ "Rk" ]."'></td>";
+       echo "<td> ".$namerow[ "PosRank" ]."</td>";
        echo "<td> ".$namerow[ "Player" ]." </td><td>".$namerow[ "TeamName" ]." </td><td>".$namerow[ "FantPosition" ]."</td>";
+       echo "<td>".$namerow[ "RushingYds" ]." </td><td>".$namerow[ "RushingTD" ]." </td>";
+
+
      echo "</tr>";
  }
-echo "<tr> <td> <input type='submit' value='Add My Team' name='submit'</td> </tr> <tr><br></tr>";
 echo "</table>";
 echo"</html></body>";
     } else {
